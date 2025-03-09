@@ -203,41 +203,30 @@ function displayNum(target) {
 
             case "=":
                 filterOp(disPanel.textContent,"+","-","*","÷");
+                console.log(disPanel.textContent);
+                if (disPanel.textContent === "") {disPanel.textContent = 0}
+                disNum = disPanel.textContent;
                 if (lastDigit === "number" && num1 === "empty") {
-                    num1 = +disPanel.textContent;
-                    result = num1;
-                    disPanel.textContent = result;
-                    console.log(result);
-                    if (disPanel.textContent !=="") {
-                        resultMode = true;
-                    }
-                } else if (lastDigit === "number" && num2 === "empty") {
-                    num2 = +disPanel.textContent;
-                    console.log(`${num2} stored in num2`);
-                    console.log(`${num1},${num2},${op}`)
-                    let result = operate(num1,num2,op);
-                    console.log(result)
-                    if (isFloat(result)) {
-                        result = round9sf(result)
-                    }
-                    disPanel.textContent = result;
-                    disNum = result;
-                    num1 = result;
-                    num2 = op = "empty"
-                    resultMode = true;
-                    
-                    result = operate(num1,num2,op)
-                    isFloat(result) ? result = round9sf(result) : console.log("ahah");
-                    disPanel.textContent = result;
-                    console.log(result);
-                } else if (lastDigit === "number") {
-                    disPanel.textContent = result;
-                    resultMode = true;
-                    num2 = op = "empty";
-                }
-                console.log(target.textContent);
-            lastDigit = "operator"
-            console.log(`last digit is ${lastDigit}`)
+                    num1 = +disNum;
+                    console.log(`${num1} stored in num1`);
+                   } else if (lastDigit ==="number" && num2 === "empty") {
+                       num2 = +disNum;
+                       console.log(`${num2} stored in num2`);
+                       console.log(`${num1},${num2},${op}`)
+                       let result = operate(num1,num2,op);
+                       isFloat(result) ? result = round9sf(result) : result = result;
+                       disPanel.textContent = result;
+                       disNum = result;
+                       num1 = result;
+                       num2 = op = "empty"
+                       resultMode = true;
+                   } else if (lastDigit ==="number" && num1 !=="empty" && num2 !=="empty") {
+                     console.log(`broke at here`);
+                   } else {
+                       console.log("broke at seconds");
+                   }
+                    lastDigit = "operator"
+                    console.log(`last digit is ${lastDigit}`)
                 break;  
             
             default:
@@ -317,6 +306,9 @@ function handler(symbol) {
                 op = "divide";
                 break;
             
+            case "=":
+            console.log("this is equal;")   
+            break;
             default:
                 console.log("broke at op handler");
                 break;
