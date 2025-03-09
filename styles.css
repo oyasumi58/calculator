@@ -1,5 +1,5 @@
 * {
-    font-family: sans-serif,'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial;
+    font-family: Georgia,'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial;
     /* border: 2px solid red; */
 }
 
@@ -11,40 +11,49 @@ body {
 }
 
 button {
-    min-height: 240px;
-    min-width: 240px;
-    aspect-ratio: 1/1;
-    flex-grow: 0;
-    margin: 5px;
+   
+    border: 8px solid rgb(224, 158, 158);
+    max-width: 230px;
+    max-height: 400px;
+    flex-grow: 1;
+    border-radius: 10px;
+    font-size: 50px;
+    font-weight: bold;
 }
 
 #mainCon {
-    background-color: #7b93b8;
+    background-color: #111720;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    border: 5px solid #111720;
-    width: 960px;
-    height: 1060px;
+    border: 20px solid #111720;
+    min-width: 960px;
+    min-height: 1060px;
 }
 
 #display {
-    /* border: 5px solid rgb(143, 0, 0); */
+    background-color: #a6b8d6;
+    /* border: 15px solid rgb(74, 145, 121); */
     min-width: 100px;
-    min-height: 100px;
+    min-height: 200px;
     border-radius: 10px;
+    margin-bottom: 20px;
 }
 
 #rowCon {
-    background-color: white;
+    background-color: rgb(9, 34, 54);
     display: flex;
     flex-direction: column;
-    justify-content: space-evenly;
+    justify-content: space-between;
     flex-grow: 1;
+    gap: 8px;
 }
 
 .row {
     display: flex;
     flex-grow: 1;
-    border: 3px solid red;
+    /* border: 3px solid red; */
+    min-width: 0px;
+    gap: 8px;
+    justify-content: space-between;
 }
