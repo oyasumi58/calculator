@@ -8,6 +8,16 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    margin: 0px;
+    background-color: rgb(203, 210, 212);
+    border: 30px solid rgb(208, 198, 218)
+
+}
+
+h1 {
+    font-size: 50px;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-weight: 900;
 }
 
 button {
@@ -20,7 +30,16 @@ button {
     font-weight: bold;
 }
 
+p {
+    font-size: 30px;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-weight: bold;
+    text-align: center;
+    margin: 0px;
+}
+
 #mainCon {
+    margin-top: 20px;
     border-radius: 10px;
     background-color: #111720;
     display: flex;
@@ -66,4 +85,20 @@ button {
     min-width: 0px;
     gap: 8px;
     justify-content: space-between;
+}
+
+#footer {
+    background-color: #111720;
+    border-radius: 10px;
+    border: 5px solid white;
+    flex-grow: 1;
+    color: white;
+    font-size: 30px;
+    margin-top: 20px;
+    max-width: 10000px;
+    width: 960px;
+    display: flex;
+    justify-content: center;
+    padding: 40px 100px;
+
 }
