@@ -49,10 +49,85 @@ function operate(no1,no2,func) {
 
 console.log(operate(1,4,"multiply"));
 
-
-//create basic html calcultor with buttons for each digit and oeprator, including =
-
 //create functions that populate display when you click digit buttons, AND store content of display into variable
+
+//these are vars that reference the exact node of the button
+let one = document.querySelector("#one");
+let two = document.querySelector("#two");
+let three = document.querySelector("#three");
+let four = document.querySelector("#four");
+let five = document.querySelector("#five");
+let six = document.querySelector("#six");
+let seven = document.querySelector("#seven");
+let eight = document.querySelector("#eight");
+let nine = document.querySelector("#nine");
+let zero = document.querySelector("#zero");
+let decimal = document.querySelector("#decimal");
+let equal = document.querySelector("#equal");
+let tn = document.querySelector("#TN");
+let ac = document.querySelector("#AC");
+let del = document.querySelector("#del");
+let percent = document.querySelector("#percent");
+let plus = document.querySelector("#plus");
+let times = document.querySelector("#times");
+let minus = document.querySelector("#minus");
+let divideSign = document.querySelector("#divide");
+
+function giveListener() {
+    let buttons = Array.from(document.querySelectorAll("button"));
+    console.log(buttons);
+    for (i=0; i<buttons.length; i++) {
+        buttons[i].addEventListener("click", (e) => {
+            //console.log(e.target.textContent);
+            displayNum(e.target);
+        })
+    }
+}
+
+giveListener();
+
+function displayNum(target) {
+    let disPanel = document.querySelector('#input');
+    //console.log(disPanel);
+    console.log(parseInt(target.textContent));
+    if (!isNaN(parseInt(target.textContent))
+    || target.textContent == "+"
+    || target.textContent == "-"
+    || target.textContent == "*"
+    || target.textContent == "÷") {
+        disPanel.textContent = target.textContent
+    } else {
+        switch (target.textContent) {
+            case "%":
+                console.log(target.textContent);
+                break;
+            
+            case "AC":
+                console.log(target.textContent);
+                break;
+            
+            case "Del":
+                console.log(target.textContent);
+                break;
+            
+            case "T/N":
+                console.log(target.textContent);
+                break;
+            
+            case ".":
+                console.log(target.textContent);
+                break;
+
+            case "=":
+                console.log(target.textContent);
+                break;
+
+            
+        }
+    }
+    
+}
+
 
 //make it work, store no inputs and then operate() when user presses = button
 
