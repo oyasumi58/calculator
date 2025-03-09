@@ -1,5 +1,5 @@
 * {
-    font-family: Georgia,'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial;
+    font-family: sans-serif,'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial;
     /* border: 2px solid red; */
 }
 
@@ -44,7 +44,7 @@ button {
     font-size: 150px;
     font-weight: bold;
     text-align: right;
-    margin-top: 40px;
+    margin-top: 20px;
     margin-right: 20px;
 }
 
