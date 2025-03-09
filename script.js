@@ -183,8 +183,13 @@ function displayNum(target) {
             break;
             
             case "T/N":
-              
-            console.log(target.textContent);
+                if(+disPanel.textContent > 0) {
+                    window.setTimeout(getNegative,10);
+                } else {
+                    window.setTimeout(getPositive,10);
+                }
+                
+            //console.log(target.textContent);
             break;
             
             case ".":
@@ -243,6 +248,23 @@ function displayNum(target) {
     
 }
 
+function getNegative() {
+    if (lastDigit === "number" && disPanel.textContent > 0) {
+        disNum = -disPanel.textContent
+        disPanel.textContent = -disPanel.textContent;
+        //console.log(target.textContent);
+        if (disPanel.textContent.length > 10) {disPanel.textContent = round9sf(+disPanel.textContent)}
+    } 
+}
+
+function getPositive() {
+    if (lastDigit === "number" && disPanel.textContent < 0) {
+        disNum = Math.abs(disPanel.textContent)
+        disPanel.textContent = Math.abs(disPanel.textContent);
+        //console.log(target.textContent);
+        if (disPanel.textContent.length > 10) {disPanel.textContent = round9sf(+disPanel.textContent)}
+    }
+}
 
 //make it work, store no inputs and then operate() when user presses = button
 
