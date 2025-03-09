@@ -120,8 +120,9 @@ function displayNum(target) {
                 };
                 handler(target.textContent)};
         } else if (resultMode === true) {
-            disPanel.textContent = "";    
+            disPanel.textContent = "";  
             disPanel.textContent += target.textContent
+            resultMode = false;
                 if(disPanel.textContent.length == 2) {
                     filterOp(disPanel.textContent,"+","-","*","÷")
                 handler(target.textContent)};
@@ -163,8 +164,41 @@ function displayNum(target) {
                 break;
 
             case "=":
+                filterOp(disPanel.textContent,"+","-","*","÷");
+                if (num1 === "empty") {
+                    console.log('num1 empty state');
+                    let num1 = disPanel.textContent;
+                    result = num1;
+                    disPanel.textContent = result;
+                    disNum = result;
+                    num1 = result;
+                    num2 = op = "empty"
+                    resultMode = true;
+                } else if (num2 === "empty") {
+                    console.log('num2 empty state');
+                    num2 = +disNum;
+                    console.log(`${num1},${num2},${op}`)
+                    let result = operate(num1,num2,op);
+                    disPanel.textContent = result;
+                    disNum = result;
+                    num2 = result;
+                    op = "empty"
+                    resultMode = true;
+                } else {
+                    console.log(num2);
+                    console.log(`${num1},${num2},${op}`)
+                    let result = operate(num1,num2,op);
+                    disPanel.textContent = result;
+                    disNum = result;
+                    num1 = num2 = op = "empty"
+                    resultMode = true;
+                }
                 console.log(target.textContent);
-                break;          
+                break;  
+            
+            default:
+                console.log("switch broke");
+                break;
         }
     }
     
@@ -180,28 +214,47 @@ function displayNum(target) {
 function handler(symbol) {
     //console.log(symbol);
     if (!isNaN(parseInt(symbol))) {//its a no.
-        //console.log(num1);
+
     } else if (isNaN(parseInt(symbol))) {//its a op
         console.log(symbol);
+        if (num1 === "empty") {
+            num1 = +disNum;
+            console.log(`${num1} stored in num1`);
+           } else if (num2 === "empty") {
+               num2 = +disNum;
+               console.log(`${num2} stored in num2`);
+               console.log(`${num1},${num2},${op}`)
+               let result = operate(num1,num2,op);
+               disPanel.textContent = result;
+               disNum = result;
+               num1 = result;
+               num2 = op = "empty"
+               resultMode = true;
+           } else if (num1 !=="empty" && num2 !=="empty") {
+             console.log(`skibdii`);
+           } else {
+               console.log("broke at seconds");
+           }
         switch (symbol) {
             case "+":
                 op = "add";
-                //console.log(op);
-                if (num1 === "empty") {
-                    num1 = +disNum;
-                    console.log(num1);
-                } else if (num2 === "empty") {
-                    num2 = +disNum;
-                    console.log(num2);
-                } else {
-                    console.log("broke at seconds");
-                    console.log(`${num1},${num2},${op}`)
-                    let result = operate(num1,num2,op);
-                    disPanel.textContent = result;
-                    disNum = result;
-                    num1 = num2 = op = "empty"
-                    resultMode = true;
-                }
+                break;
+
+            case "-":
+                op = "subtract";
+                break;
+                
+            case "*":
+                op = "multiply";
+                break;
+                
+            case "÷":
+                op = "divide";
+                break;
+            
+            default:
+                console.log("broke at op handler");
+                break;
         }
     } else {
         console.log("handler broke");
