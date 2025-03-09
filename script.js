@@ -37,7 +37,7 @@ let num2 = "empty";
 let op = "empty";
 let resultMode = false;
 let lastDigit;
-let checkZero = false;
+
 
 //create function operate to take an oprator and 2 no and call
 //one of the above respective functions
@@ -223,8 +223,9 @@ function displayNum(target) {
                        num2 = +disNum;
                        console.log(`${num2} stored in num2`);
                        console.log(`${num1},${num2},${op}`)
-                       if (op === "÷" && num2 === 0) {
-                        alert("Fhksfghgjf");
+                       if (op === "divide" && num2 === 0) {
+                        console.log("worko)");
+                        alert("CAUGHT YOU!");
                         let result = 0
                         disPanel.textContent = result;
                         disNum = result;
@@ -296,6 +297,16 @@ function handler(symbol) {
                num2 = +disNum;
                console.log(`${num2} stored in num2`);
                console.log(`${num1},${num2},${op}`)
+               if (op === "divide" && num2 === 0) {
+                console.log("worko)");
+                alert("CAUGHT YOU!");
+                let result = 0
+                disPanel.textContent = result;
+                disNum = result;
+                num1 = "empty";
+                num2 = op = "empty"
+                resultMode = true;
+            }
                let result = operate(num1,num2,op);
                isFloat(result) ? result = round9sf(result) : result = result;
                disPanel.textContent = result;
