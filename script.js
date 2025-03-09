@@ -1,20 +1,34 @@
 // perform add, subtract, multiply and divde functions
 const add = function(num1,num2) {
-	return num1 + num2;
+	if (isFloat(num1) || isFloat(num2)) {
+        return (100000000 * num1 + 100000000 * num2) / 100000000
+    }
+    return num1 + num2;
 };
 
 //console.log(add(1,1));
 
 const subtract = function(num1,num2) {
-	return num1 - num2;
+	if (isFloat(num1) || isFloat(num2)) {
+        return (100000000 * num1 - 100000000 * num2) / 100000000
+    }
+    return num1 - num2;
 };
 
 const multiply = function(num1,num2) {
-	return num1 * num2;
+	if (isFloat(num1) || isFloat(num2)) {
+        return (num1 * num2)
+    }
+    return num1 * num2;
 };
 
+console.log(multiply(10,0.5))
+
 const divide = function(num1,num2) {
-	return num1 / num2;
+	if (isFloat(num1) || isFloat(num2)) {
+        return (100000000 * num1 / 100000000 * num2) / 100000000
+    }
+    return num1 / num2;
 };
 
 //create variables for no1, operator and no2
@@ -22,6 +36,7 @@ let num1 = "empty";
 let num2 = "empty";
 let op = "empty";
 let resultMode = false;
+let lastDigit;
 
 //create function operate to take an oprator and 2 no and call
 //one of the above respective functions
@@ -125,16 +140,17 @@ function displayNum(target) {
             resultMode = false;
                 if(disPanel.textContent.length == 2) {
                     filterOp(disPanel.textContent,"+","-","*","÷")
-                handler(target.textContent)};
-        } else {
-            console.log("broke at resultmode");
-        }
+                } else {};
+            //console.log(`${target.textContent} is text content`)
+            handler(target.textContent)} else {
+                console.log("broke in resultmode");
+            }
+        
        
     } else if (target.textContent == "+"
         || target.textContent == "-"
         || target.textContent == "*"
         || target.textContent == "÷") {
-        
             disNum = disPanel.textContent;
             disPanel.textContent = target.textContent
             
@@ -146,53 +162,66 @@ function displayNum(target) {
                 break;
             
             case "AC":
-                console.log(target.textContent);
-                disPanel.textContent = ""
-                num1 = num2 = op = "empty"
-                break;
+            console.log(target.textContent);
+            disPanel.textContent = "";
+            num1 = num2 = op = "empty";
+            resultMode = false;
+            break;
             
             case "Del":
-                console.log(target.textContent);
-                break;
+            if (resultMode === false) {
+                let arr = Array.from(disPanel.textContent);
+                let ret = arr.toSpliced(-1,1).join("");
+                disPanel.textContent = ret;
+            }
+
+             console.log(target.textContent);
+            break;
             
             case "T/N":
-                console.log(target.textContent);
-                break;
+              
+            console.log(target.textContent);
+            break;
             
             case ".":
-                console.log(target.textContent);
-                break;
+                if (resultMode === false && lastDigit ==="number") {
+                    if (disPanel.textContent.length < 10) {
+                     disPanel.textContent += target.textContent
+                    }
+                }
+            console.log(target.textContent);
+            break;
 
             case "=":
                 filterOp(disPanel.textContent,"+","-","*","÷");
-                if (num1 === "empty") {
-                    console.log('num1 empty state');
-                    let num1 = disPanel.textContent;
-                    result = num1;
-                    disPanel.textContent = result;
-                    disNum = result;
-                    num1 = result;
-                    num2 = op = "empty"
-                    resultMode = true;
-                } else if (num2 === "empty") {
-                    console.log('num2 empty state');
-                    num2 = +disNum;
-                    console.log(`${num1},${num2},${op}`)
-                    let result = operate(num1,num2,op);
-                    disPanel.textContent = result;
-                    disNum = result;
-                    num2 = result;
-                    op = "empty"
-                    resultMode = true;
-                } else {
-                    console.log(num2);
-                    console.log(`${num1},${num2},${op}`)
-                    let result = operate(num1,num2,op);
-                    disPanel.textContent = result;
-                    disNum = result;
-                    num1 = num2 = op = "empty"
-                    resultMode = true;
-                }
+                // if (num1 === "empty") {
+                //     console.log('num1 empty state');
+                //     let num1 = disPanel.textContent;
+                //     result = num1;
+                //     disPanel.textContent = result;
+                //     disNum = result;
+                //     num1 = result;
+                //     num2 = op = "empty"
+                //     resultMode = true;
+                // } else if (num2 === "empty") {
+                //     console.log('num2 empty state');
+                //     num2 = +disNum;
+                //     console.log(`${num1},${num2},${op}`)
+                //     let result = operate(num1,num2,op);
+                //     disPanel.textContent = result;
+                //     disNum = result;
+                //     num2 = result;
+                //     op = "empty"
+                //     resultMode = true;
+                // } else {
+                //     console.log(num2);
+                //     console.log(`${num1},${num2},${op}`)
+                //     let result = operate(num1,num2,op);
+                //     disPanel.textContent = result;
+                //     disNum = result;
+                //     num1 = num2 = op = "empty"
+                //     resultMode = true;
+                // }
                 console.log(target.textContent);
                 break;  
             
@@ -214,27 +243,31 @@ function displayNum(target) {
 function handler(symbol) {
     //console.log(symbol);
     if (!isNaN(parseInt(symbol))) {//its a no.
-
+        lastDigit = "number"
+        console.log(`last digit is ${lastDigit}`)
     } else if (isNaN(parseInt(symbol))) {//its a op
         console.log(symbol);
-        if (num1 === "empty") {
+        if (lastDigit === "number" && num1 === "empty") {
             num1 = +disNum;
             console.log(`${num1} stored in num1`);
-           } else if (num2 === "empty") {
+           } else if (lastDigit ==="number" && num2 === "empty") {
                num2 = +disNum;
                console.log(`${num2} stored in num2`);
                console.log(`${num1},${num2},${op}`)
                let result = operate(num1,num2,op);
+               isFloat(result) ? result = round9sf(result) : console.log("ahah");
                disPanel.textContent = result;
                disNum = result;
                num1 = result;
                num2 = op = "empty"
                resultMode = true;
-           } else if (num1 !=="empty" && num2 !=="empty") {
+           } else if (lastDigit ==="number" && num1 !=="empty" && num2 !=="empty") {
              console.log(`skibdii`);
            } else {
                console.log("broke at seconds");
            }
+            lastDigit = "operator"
+            console.log(`last digit is ${lastDigit}`)
         switch (symbol) {
             case "+":
                 op = "add";
@@ -262,6 +295,20 @@ function handler(symbol) {
 };
 
 
+function isFloat(num) {
+    if (num % 1 !==0) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+
+function round9sf(num) {
+    return num.toPrecision(9);
+}
+//console.log(isFloat(77.1));
+//console.log(round9sf(56.225));
 
 //note: should not eval more than a single pair of no at a time
 //round answers with long decimals
