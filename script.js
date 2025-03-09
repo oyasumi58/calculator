@@ -21,7 +21,7 @@ const divide = function(num1,num2) {
 let num1 = "empty";
 let num2 = "empty";
 let op = "empty";
-
+let resultMode = false;
 
 //create function operate to take an oprator and 2 no and call
 //one of the above respective functions
@@ -47,7 +47,7 @@ function operate(no1,no2,func) {
     }
 }
 
-console.log(operate(1,4,"multiply"));
+//console.log(operate(1,4,"multiply"));
 
 //create functions that populate display when you click digit buttons, AND store content of display into variable
 
@@ -91,16 +91,15 @@ let disNum;
 
 function filterOp(content,...Args) {
     let arr = Array.from(content);
-    console.log(arr)
+    //console.log(arr)
     for (arg of Args) {
         for (i=0 ; i < arr.length; i++) {
-            console.log(arr[i])
-            console.log(arg)
+            //console.log(arr[i])
+            //console.log(arg)
             if(arr[i] === arg) {
                 arr.splice(i,1)
                 let disp = arr.join("")
                 disPanel.textContent = disp;
-
                 i--
             }
         }
@@ -113,18 +112,31 @@ function displayNum(target) {
     //console.log(disPanel);
     //console.log(parseInt(target.textContent));
     if (!isNaN(parseInt(target.textContent))) {
-        if (disPanel.textContent.length < 10) {
+        if (resultMode === false) {
+            if (disPanel.textContent.length < 10) {
+                disPanel.textContent += target.textContent
+                if(disPanel.textContent.length == 2) {
+                    filterOp(disPanel.textContent,"+","-","*","÷")
+                };
+                handler(target.textContent)};
+        } else if (resultMode === true) {
+            disPanel.textContent = "";    
             disPanel.textContent += target.textContent
-            if(disPanel.textContent.length == 2) {
-                filterOp(disPanel.textContent,"+","-","*","÷")
-            };
-            handler(target.textContent)};
+                if(disPanel.textContent.length == 2) {
+                    filterOp(disPanel.textContent,"+","-","*","÷")
+                handler(target.textContent)};
+        } else {
+            console.log("broke at resultmode");
+        }
+       
     } else if (target.textContent == "+"
         || target.textContent == "-"
         || target.textContent == "*"
         || target.textContent == "÷") {
+        
             disNum = disPanel.textContent;
             disPanel.textContent = target.textContent
+            
             handler(target.textContent);
         } else {
         switch (target.textContent) {
@@ -168,20 +180,27 @@ function displayNum(target) {
 function handler(symbol) {
     //console.log(symbol);
     if (!isNaN(parseInt(symbol))) {//its a no.
-        console.log(num1);
+        //console.log(num1);
     } else if (isNaN(parseInt(symbol))) {//its a op
         console.log(symbol);
         switch (symbol) {
             case "+":
                 op = "add";
-                console.log(op);
+                //console.log(op);
                 if (num1 === "empty") {
-                    num1 = disNum;
+                    num1 = +disNum;
                     console.log(num1);
                 } else if (num2 === "empty") {
-
+                    num2 = +disNum;
+                    console.log(num2);
                 } else {
                     console.log("broke at seconds");
+                    console.log(`${num1},${num2},${op}`)
+                    let result = operate(num1,num2,op);
+                    disPanel.textContent = result;
+                    disNum = result;
+                    num1 = num2 = op = "empty"
+                    resultMode = true;
                 }
         }
     } else {
