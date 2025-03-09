@@ -195,7 +195,7 @@ function displayNum(target) {
             break;
             
             case ".":
-                if (resultMode === false && lastDigit ==="number") {
+                if (resultMode === false && lastDigit ==="number" && !disPanel.textContent.includes(".")) {
                     if (disPanel.textContent.length < 10) {
                      disPanel.textContent += target.textContent
                     }
@@ -205,7 +205,7 @@ function displayNum(target) {
 
             case "=":
             if(op === "empty" ) {
-                alert("operator emptyYYYYY")
+                alert("OPERATOR IS EMPTYYYYY")
             }
             if (+disPanel.textContent < 0) {
                 filterOp(disPanel.textContent,"+","*","÷")
@@ -223,13 +223,24 @@ function displayNum(target) {
                        num2 = +disNum;
                        console.log(`${num2} stored in num2`);
                        console.log(`${num1},${num2},${op}`)
-                       let result = operate(num1,num2,op);
-                       isFloat(result) ? result = round9sf(result) : result = result;
-                       disPanel.textContent = result;
-                       disNum = result;
-                       num1 = "empty";
-                       num2 = op = "empty"
-                       resultMode = true;
+                       if (op === "÷" && num2 === 0) {
+                        alert("Fhksfghgjf");
+                        let result = 0
+                        disPanel.textContent = result;
+                        disNum = result;
+                        num1 = "empty";
+                        num2 = op = "empty"
+                        resultMode = true;
+                       } else {
+                        let result = operate(num1,num2,op);
+                        isFloat(result) ? result = round9sf(result) : result = result;
+                        disPanel.textContent = result;
+                        disNum = result;
+                        num1 = "empty";
+                        num2 = op = "empty"
+                        resultMode = true;
+                       }
+                      
                    } else if (lastDigit ==="number" && num1 !=="empty" && num2 !=="empty") {
                      console.log(`broke at here`);
                    } else {
