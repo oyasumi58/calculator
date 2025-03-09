@@ -37,6 +37,7 @@ let num2 = "empty";
 let op = "empty";
 let resultMode = false;
 let lastDigit;
+let checkZero = false;
 
 //create function operate to take an oprator and 2 no and call
 //one of the above respective functions
@@ -137,6 +138,7 @@ function displayNum(target) {
         } else if (resultMode === true) {
             disPanel.textContent = "";  
             disPanel.textContent += target.textContent
+            num1 = num2 = "empty"
             resultMode = false;
                 if(disPanel.textContent.length == 2) {
                     filterOp(disPanel.textContent,"+","-","*","÷")
@@ -203,6 +205,17 @@ function displayNum(target) {
 
             case "=":
                 filterOp(disPanel.textContent,"+","-","*","÷");
+                if (checkZero === true) {
+                    if(num2 === 0) {
+                        disPanel.textContent = "";
+                        num1 = num2 = op = "empty";
+                        resultMode = false;
+                        checkZero =false;
+                        return;
+                    } else {
+                        checkZero = false;
+                    }
+                }
                 console.log(disPanel.textContent);
                 if (disPanel.textContent === "") {disPanel.textContent = 0}
                 disNum = disPanel.textContent;
@@ -304,6 +317,7 @@ function handler(symbol) {
                 
             case "÷":
                 op = "divide";
+                let checkZero = true;
                 break;
             
             case "=":
