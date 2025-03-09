@@ -158,8 +158,12 @@ function displayNum(target) {
         } else {
         switch (target.textContent) {
             case "%":
+            if (lastDigit === "number") {
+                disNum = disPanel.textContent = disPanel.textContent / 100;
                 console.log(target.textContent);
-                break;
+                if (disPanel.textContent.length > 10) {disPanel.textContent = round9sf(+disPanel.textContent)}
+            }
+            break;
             
             case "AC":
             console.log(target.textContent);
@@ -194,35 +198,41 @@ function displayNum(target) {
 
             case "=":
                 filterOp(disPanel.textContent,"+","-","*","÷");
-                // if (num1 === "empty") {
-                //     console.log('num1 empty state');
-                //     let num1 = disPanel.textContent;
-                //     result = num1;
-                //     disPanel.textContent = result;
-                //     disNum = result;
-                //     num1 = result;
-                //     num2 = op = "empty"
-                //     resultMode = true;
-                // } else if (num2 === "empty") {
-                //     console.log('num2 empty state');
-                //     num2 = +disNum;
-                //     console.log(`${num1},${num2},${op}`)
-                //     let result = operate(num1,num2,op);
-                //     disPanel.textContent = result;
-                //     disNum = result;
-                //     num2 = result;
-                //     op = "empty"
-                //     resultMode = true;
-                // } else {
-                //     console.log(num2);
-                //     console.log(`${num1},${num2},${op}`)
-                //     let result = operate(num1,num2,op);
-                //     disPanel.textContent = result;
-                //     disNum = result;
-                //     num1 = num2 = op = "empty"
-                //     resultMode = true;
-                // }
+                if (lastDigit === "number" && num1 === "empty") {
+                    num1 = +disPanel.textContent;
+                    result = num1;
+                    disPanel.textContent = result;
+                    console.log(result);
+                    if (disPanel.textContent !=="") {
+                        resultMode = true;
+                    }
+                } else if (lastDigit === "number" && num2 === "empty") {
+                    num2 = +disPanel.textContent;
+                    console.log(`${num2} stored in num2`);
+                    console.log(`${num1},${num2},${op}`)
+                    let result = operate(num1,num2,op);
+                    console.log(result)
+                    if (isFloat(result)) {
+                        result = round9sf(result)
+                    }
+                    disPanel.textContent = result;
+                    disNum = result;
+                    num1 = result;
+                    num2 = op = "empty"
+                    resultMode = true;
+                    
+                    result = operate(num1,num2,op)
+                    isFloat(result) ? result = round9sf(result) : console.log("ahah");
+                    disPanel.textContent = result;
+                    console.log(result);
+                } else if (lastDigit === "number") {
+                    disPanel.textContent = result;
+                    resultMode = true;
+                    num2 = op = "empty";
+                }
                 console.log(target.textContent);
+            lastDigit = "operator"
+            console.log(`last digit is ${lastDigit}`)
                 break;  
             
             default:
@@ -255,14 +265,14 @@ function handler(symbol) {
                console.log(`${num2} stored in num2`);
                console.log(`${num1},${num2},${op}`)
                let result = operate(num1,num2,op);
-               isFloat(result) ? result = round9sf(result) : console.log("ahah");
+               isFloat(result) ? result = round9sf(result) : result = result;
                disPanel.textContent = result;
                disNum = result;
                num1 = result;
                num2 = op = "empty"
                resultMode = true;
            } else if (lastDigit ==="number" && num1 !=="empty" && num2 !=="empty") {
-             console.log(`skibdii`);
+             console.log(`broke at here`);
            } else {
                console.log("broke at seconds");
            }
